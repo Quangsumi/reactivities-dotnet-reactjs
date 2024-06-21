@@ -1,15 +1,12 @@
 import { Button, Form, Segment } from "semantic-ui-react";
-import { Activity } from "../../../app/models/activity";
 import { ChangeEvent, useState } from "react";
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-    activity: Activity | undefined;
-    closeForm: () => void;
-    createOrUpdate: (activity: Activity) => void;
-    submitting: boolean;
-}
-
-export default function ActivityForm({activity: selectedActivity, closeForm, createOrUpdate, submitting}: Props) {
+function ActivityForm() {
+    const {activityStore} = useStore();
+    const {selectedActivity, loading, createActivity, updateActivity, closeForm} = activityStore;
+    
     const initialActivity = selectedActivity ?? {
         id: '',
         title: '',
@@ -23,7 +20,7 @@ export default function ActivityForm({activity: selectedActivity, closeForm, cre
     const [activity, setActivity] = useState(initialActivity);
 
     function handleOnSubmit() {
-        createOrUpdate(activity);
+        activity.id ? updateActivity(activity) : createActivity(activity);
     }
 
     function handleInput(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -45,9 +42,11 @@ export default function ActivityForm({activity: selectedActivity, closeForm, cre
                 <Form.Input type='date' placeholder='Date' name='date' value={activity.date} onChange={handleInput}/>
                 <Form.Input placeholder='City' name='city' value={activity.city} onChange={handleInput}/>
                 <Form.Input placeholder='Venue' name='venue' value={activity.venue} onChange={handleInput}/>
-                <Button floated='right' positive type='submit' content='Submit' />
-                <Button loading={submitting} onClick={closeForm} floated='right' type='button' content='Cancel' />
+                <Button loading={loading} floated='right' positive type='submit' content='Submit' />
+                <Button onClick={closeForm} floated='right' type='button' content='Cancel' />
             </Form>
         </Segment>
     )
 }
+
+export default observer(ActivityForm);
