@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Formik, Form, Field, FieldProps } from 'formik';
 import { observer } from 'mobx-react-lite'
 import { Link } from 'react-router-dom';

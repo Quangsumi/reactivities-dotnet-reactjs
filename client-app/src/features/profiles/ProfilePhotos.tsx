@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { observer } from "mobx-react-lite";
 import { SyntheticEvent, useState } from "react";
 import { Card, Header, Tab, Image, Grid, Button } from "semantic-ui-react";

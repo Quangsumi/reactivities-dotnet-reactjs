@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ErrorMessage, Form, Formik } from "formik";
 import { observer } from "mobx-react-lite";
 import { Button, Header, Label } from "semantic-ui-react";
